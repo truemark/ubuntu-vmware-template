@@ -12,7 +12,7 @@ if [ -f /var/log/lastlog ]; then
 	cat /dev/null > /var/log/lastlog
 fi
 if [ -f /var/log/syslog ]; then
-	car /dev/null > /var/log/syslog
+	cat /dev/null > /var/log/syslog
 fi
 
 # Clear out ssh keys and files

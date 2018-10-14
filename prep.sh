@@ -20,6 +20,20 @@ rm -f /etc/ssh/ssh_host_*
 rm -rf /root/.ssh
 rm -rf /home/user/.ssh
 
+# Setup re-generation of host keys
+if ! grep -q "ssh-keygen" /etc/rc.local; then
+sed -i '/exit 0/d' /etc/rc.local
+cat >> /etc/rc.local <<-EOF
+if [ ! -f /etc/ssh/ssh_host_rsa_key ]; then
+        ssh-keygen -f /etc/ssh/ssh_host_rsa_key -N '' -t rsa
+fi
+if [ ! -f /etc/ssh/ssh_host_dsa_key ]; then
+        ssh-keygen -f /etc/ssh/ssh_host_dsa_key -N '' -t dsa
+fi
+exit 0
+EOF
+fi
+
 # Clean apt
 apt-get clean
 
